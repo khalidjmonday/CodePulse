@@ -4,11 +4,13 @@ public class ProjectScanner {
 
     private ProjectStats stats;
     private LineCounter counter;
+    private TodoFinder todoFinder;
 
     public ProjectScanner(ProjectStats stats) {
 
         this.stats = stats;
         this.counter = new LineCounter();
+        this.todoFinder = new TodoFinder();
     }
 
     public void scanProject(String folderPath) {
@@ -38,14 +40,17 @@ public class ProjectScanner {
 
                 scanFolder(file);
             }
-
             else if (file.getName().endsWith(".java")) {
 
-                stats.totalJavaFiles++;
+                stats.javaFiles++;
 
-                System.out.println("Found: " + file.getName());
+                System.out.println(
+                        "Found: " + file.getName());
 
-                counter.analyzeFile(file, stats);
+                counter.countLines(file, stats);
+
+                stats.todoCount +=
+                        todoFinder.findTodos(file);
             }
         }
     }

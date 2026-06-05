@@ -2,35 +2,43 @@ import java.io.*;
 
 public class LineCounter {
 
-    public void analyzeFile(File file, ProjectStats stats) {
+    public void countLines(File file, ProjectStats stats) {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        int fileLines = 0;
+
+        try (BufferedReader br =
+                     new BufferedReader(new FileReader(file))) {
 
             String line;
 
-            while ((line = reader.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
 
+                fileLines++;
                 stats.totalLines++;
 
-                line = line.trim();
+                String trimmed = line.trim();
 
-                if (line.isEmpty()) {
+                if (trimmed.isEmpty()) {
                     stats.blankLines++;
                 }
+                else if (trimmed.startsWith("//")
+                        || trimmed.startsWith("/*")
+                        || trimmed.startsWith("*")) {
 
-                else if (line.startsWith("//")) {
                     stats.commentLines++;
                 }
-
                 else {
                     stats.codeLines++;
                 }
             }
 
-        } catch (IOException e) {
+            if (fileLines > stats.largestFileLines) {
+                stats.largestFileLines = fileLines;
+                stats.largestFileName = file.getName();
+            }
 
-            System.out.println("Error reading file: " + file.getName());
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

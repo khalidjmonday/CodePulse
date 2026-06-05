@@ -1,0 +1,12 @@
+CODEPULSE REPORT
+========================
+
+Java Files: 6
+Total Lines: 262
+Code Lines: 181
+Comment Lines: 1
+Blank Lines: 80
+TODOs Found: 4
+
+Largest File:
+Main.java (68 lines)
