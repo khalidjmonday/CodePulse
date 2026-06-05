@@ -1,0 +1,7 @@
+========== CODEPULSE REPORT ==========
+
+Java Files: 5
+Total Lines: 176
+Code Lines: 114
+Comment Lines: 0
+Blank Lines: 62
